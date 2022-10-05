@@ -1,7 +1,9 @@
-﻿using la_mia_pizzeria_post.Models;
+﻿
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace la_mia_pizzeria_post.Models
 {
+    [Table("pizza")]
     public class Pizza
     {
         public string Name { get; set; }

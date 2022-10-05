@@ -1,4 +1,5 @@
 using la_mia_pizzeria_post.Models;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,3 +28,13 @@ app.MapControllerRoute(
     pattern: "{controller=Pizza}/{action=Index}/{id?}");
 
 app.Run();
+
+public class PizzaContext : DbContext
+{
+    public DbSet<Pizza> Pizzas { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=pizzeria-db;Integrated Security=True");
+    }
+}
