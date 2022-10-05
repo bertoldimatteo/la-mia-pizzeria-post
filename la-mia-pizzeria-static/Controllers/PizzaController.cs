@@ -1,5 +1,6 @@
 ﻿using la_mia_pizzeria_post.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace la_mia_pizzeria_post.Controllers
 {
@@ -27,6 +28,37 @@ namespace la_mia_pizzeria_post.Controllers
             pizzaList.Add(new Pizza("Pizza Patatosa", "Pizza con patate fritte", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn0ZMfnk4NU2aK-hSyLJQcsxxYLhZ7E6AwSQ&usqp=CAU", 15));
 
             return View(pizzaList[id]);
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create (Pizza formData)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("Create", formData);
+            }
+
+            using (PizzaContext context = new PizzaContext())
+            {
+                Pizza pizza = new Pizza();
+                pizza.Name = formData.Name;
+                pizza.Description = formData.Description;
+                pizza.Photo = formData.Photo;
+                pizza.Price = formData.Price;
+
+                context.Pizzas.Add(pizza);
+
+                context.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
         }
     }
 
