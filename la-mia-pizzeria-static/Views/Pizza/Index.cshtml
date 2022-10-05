@@ -8,8 +8,12 @@
     <p>Via del cimitero n°1</p>
 </div>
 
+<div>
+    <a href="@Url.Action("Create", "Pizza")">Crea Piatto</a>
+</div>
+
 <div class="pizza-section">
-    
+
     @foreach(Pizza pizza in Model){
         <div class="pizza-view">
             <span class="invisible">@count</span>
